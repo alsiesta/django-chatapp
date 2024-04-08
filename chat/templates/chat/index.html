@@ -1,18 +1,50 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %} {% if request.user.is_authenticated %} 
 
-{% block content %}
-
-
-{% if request.user.is_authenticated %} 
+<div id="messageContainer">
 {% for message in chat_messages %}
+  <div><span class="color-gray"> {{message.created_at}} </span> {{message.author}}: <i>{{message.text}}</i></div>
+  {% endfor %}
+</div>
 
-<div><span class="color-gray"> {{message.created_at}} </span> {{message.author}}: <i>{{message.text}}</i></div>
-{% endfor %}
-<form action="/chat/" method="post">
+<script>
+  async function sendMessage() {
+    let fd = new FormData();
+    let token = "{{ csrf_token }}";
+
+    fd.append("textmessage", messagefield.value);
+    fd.append("csrfmiddlewaretoken", token);
+
+    try {
+      messageContainer.innerHTML += `
+        <div id="deleteMessage">
+          <span class="color-gray"> [DATUM] </span> {{ request.user.username }}: <i  class="color-gray">${messagefield.value}</i>
+        </div>
+      `;
+      await fetch("/chat/", {
+        method: "POST",
+        body: fd,
+      });
+
+      document.getElementById("deleteMessage").remove();
+      messageContainer.innerHTML += `
+      <div>
+        <span class="color-gray"> [DATUM] </span> {{ request.user.username }}: <i>${messagefield.value}</i>
+      </div>
+    `;
+      console.log("Success!!");
+     
+    } catch (e) {
+      console.error("Error: ", e);
+    }
+  }
+</script>
+
+<form onsubmit="sendMessage(); return false;" method="post">
   {% csrf_token %}
+
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" name="textmessage" type="text" id="sample3" />
-    <label class="mdl-textfield__label" for="sample3">Text...</label>
+    <input class="mdl-textfield__input" name="textmessage" type="text" id="messagefield" />
+    <label class="mdl-textfield__label" for="messagefield">Text...</label>
   </div>
 
   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Send</button>
@@ -20,6 +52,4 @@
 {% else %}
 <h1>You are not logged in</h1>
 <p>Bitte logge Dich ein: <a href="/login/">Login</a></p>
-{% endif %}
-
-{% endblock %}
+{% endif %} {% endblock %}

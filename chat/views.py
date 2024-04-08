@@ -1,6 +1,7 @@
 # pylint: disable=no-member
 
 from django.shortcuts import render, redirect
+from django.contrib.auth import logout
 from django.contrib import messages
 from chat.models import Message
 from chat.models import Chat
@@ -27,8 +28,7 @@ def index(request):
 
 
 def login_view(request):
-    print("THE GET REQUEST: ", request.GET)
-    redirect = request.GET.get('next')
+    redirect = request.GET.get('next', '/chat/')
 
     if request.method == 'POST':
         user = authenticate(
@@ -43,20 +43,26 @@ def login_view(request):
 
 
 def register_view(request):
-    print("THE GET REQUEST: ", request.GET)
-
+ 
     if request.method == 'POST':
-        print("THE GET REQUEST: ",request.GET)
+        print("REGISTER REQUEST POST: ",request.POST)
         username = request.POST['username']
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username already exists.')
+            return redirect('register')
 
         if password != confirm_password:
             messages.error(request, 'Passwords do not match.')
             return redirect('register')
 
-        user = User.objects.create_user(username=username, password=password)
-        login(request, user)
-        return redirect('home')
+        User.objects.create_user(username=username, password=password)
+        return redirect('/chat/')
     
     return render(request, 'auth/register.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('/chat/')  # Redirect to login page after logout
