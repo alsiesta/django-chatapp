@@ -19,16 +19,18 @@
       <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
           {% if request.user.is_authenticated %}
-          <span class="mdl-layout-title">Welcome to your Chat <strong> {{request.user.username}}</strong>.</span>
+          <span class="mdl-layout-title welcome_line">Welcome to your Chat <strong> {{request.user.username}}</strong>.</span>
+          <span class="mdl-layout-title welcome_line welcome_line_mobile">Hello <strong> {{request.user.username}}</strong>.</span>
           {% else %}
-          <span class="mdl-layout-title">Welcome to Chatroom</span>
+          <span class="mdl-layout-title welcome_line">Welcome to Chatroom</span>
+          <span class="mdl-layout-title welcome_line welcome_line_mobile">Chatroom</span>
           {% endif %}
           <!-- Title -->
           <!-- Add spacer, to align navigation to the right -->
           <div class="mdl-layout-spacer"></div>
           <!-- Navigation. We hide it in small screens. -->
 
-          <nav class="mdl-navigation mdl-layout--large-screen-only">
+          <nav class="mdl-navigation my_navigation">
             {% if request.user.is_authenticated %}
             <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color-text--indigo-900 mdl-color--indigo-100" href="{% url 'logout' %}">Logout</a>
 
@@ -36,13 +38,14 @@
           </nav>
         </div>
       </header>
+
       <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Chatroom</span>
         <nav class="mdl-navigation">
           <a class="mdl-navigation__link" href="{% url 'logout' %}">Logout</a>
-          
         </nav>
       </div>
+      
       <main class="main">
         <div class="page-content">{% block content %} {% endblock %}</div>
       </main>

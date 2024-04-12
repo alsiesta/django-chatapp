@@ -1,29 +1,29 @@
 {% extends "base.html" %} {% block content %}
 
-
-
 <div class="login">
-<h1>Register</h1>
+    <h1>Register</h1>
 
-<form action="{% url 'register' %}" method="post">
-    {% csrf_token %}
-    <div class="login">
-    <input class="inputfield mdl-textfield__input" type="text" name="username" placeholder="Username" required="required" />
-    <input class="inputfield mdl-textfield__input" type="password" name="password" placeholder="Password" required="required" />
-    <input class="inputfield mdl-textfield__input" type="password" name="confirm_password" placeholder="Confirm Password" required="required" />
-    <button type="submit" class="btn btn-primary btn-block btn-large">Register</button>
-    </div>
-</form>
-<a href="{% url 'login' %}">Back to Login</a>
-{% if messages %}
-<span class="messages">
-    {% for message in messages %}
-    {% if message.tags %} 
-    <span class="error">{{ message.tags }}{% endif %}:</span> {{ message }}</li>
-    {% endfor %}
-</span>
-{% endif %}
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <div class="login">
+                <input class="inputfield mdl-textfield__input" type="text" name="username" placeholder="Username" required="required" />
+                <input class="inputfield mdl-textfield__input" type="password" name="password" placeholder="Password" required="required" />
+                <input class="inputfield mdl-textfield__input" type="password" name="confirm_password" placeholder="Confirm Password" required="required" />
+                
+                {% if messages %}
+    <span class="messages">
+        {% for message in messages %}
+        {% if message.tags %} 
+        <span class="error">{{ message.tags }}{% endif %}: {{ message }}
+        {% endfor %}</span>
+    </span>
+                {% endif %}
+                
+                <button type="submit"  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent button">Register</button>
+            </div>
+        </form>
 
+    <a href="{% url 'login' %}">Back to Login</a>
 </div>
 
 {%endblock%}

@@ -1,42 +1,66 @@
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-content {
+  width: 80%;
+  padding: 20px 30px;
+}
+
+.color-gray {
+  color: rgb(150, 150, 150);
+}
+
+.login {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputfield {
+  margin: 12px 0;
+}
+
+.button {
+  margin: 12px 0;
+}
+
+.messages {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.error {
+  font-weight: bold;
+  color: red;
+}
+.welcome_line_mobile {
+  display: none;
+}
+
+/* @media (max-width: 600px) {
+  .my_navigation {
+    display: none
+  }
+} */
+
+@media (max-width: 600px) {
+  .welcome_line,
+  .my_navigation {
+    display: none;
   }
 
-  .main {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .welcome_line_mobile {
+    display: block;
   }
-
-
-  .page-content {
-    width: 80%;
-    padding: 20px 30px;
-  }
-
-  .color-gray {
-    color: rgb(150, 150, 150);
-  }
-
-  .login {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .inputfield {
-    margin: 10px 0;
-  }
-
-  .messages {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .error {
-    color: red;
-  }
+}
