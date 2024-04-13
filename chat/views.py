@@ -24,8 +24,11 @@ def index(request):
         return JsonResponse(serialized_obj[1:-1], safe=False)
     
     chat_messages = Message.objects.filter(chat__id=1)
-    last_message_date = chat_messages.last().created_at
-    return render(request, 'chat/index.html', {'chat_messages': chat_messages, 'last_message_date': last_message_date})
+    last_message_date = chat_messages.last().created_at 
+    last_message_date_time = last_message_date.strftime('%Y-%m-%d %H:%M:%S')   
+    print('Last Message Date: ', last_message_date_time)
+    
+    return render(request, 'chat/index.html', {'chat_messages': chat_messages, 'last_message_date_time': last_message_date_time})
 
 
 def login_view(request):

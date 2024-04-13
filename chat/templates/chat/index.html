@@ -32,7 +32,7 @@
       document.getElementById("deleteMessage").remove();
       messageContainer.innerHTML += `
       <div>
-        <span class="color-gray"> {{ last_message_date }} </span> {{ request.user.username }}: <i>${messagefield.value}</i>
+        <span class="color-gray"> {{ last_message_date_time }} </span> {{ request.user.username }}: <i>${messagefield.value}</i>
       </div>
 
     `;
