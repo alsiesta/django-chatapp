@@ -16,6 +16,14 @@ from chat.models import Chat
 
 @login_required(login_url='/login/')
 def index(request):
+    """_summary_
+
+    Args:
+        request (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     if request.method == 'POST':
         print('Received Data: ' + request.POST['textmessage'])
         myChat = Chat.objects.get(id=1)
