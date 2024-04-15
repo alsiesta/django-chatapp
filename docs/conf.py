@@ -5,8 +5,21 @@
 
 import os
 import sys
+import django
+# Adjust the Python path to include the Django project directory (one level up)
 sys.path.insert(0, os.path.abspath('..'))
 
+# Set the DJANGO_SETTINGS_MODULE environment variable
+os.environ['DJANGO_SETTINGS_MODULE'] = 'django_chatapp.settings'  
+
+# Initialize Django
+django.setup()
+
+# extensions = [
+#     'sphinx.ext.autodoc',
+#     # 'sphinx.ext.napoleon',  # Optional, for Google/NumPy style docstrings
+#     # 'sphinx.ext.viewcode'   # Optional, adds links to source code
+# ]
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -23,6 +36,7 @@ extensions =  [ 'sphinx.ext.autodoc' ]
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
 
 
 
