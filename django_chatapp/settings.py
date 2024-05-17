@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-g5ca&rwb6v$v6o=2f%ui3=#it!)u4%&yza=yp)wd@yd-c33np3
 DEBUG = True
 
 ALLOWED_HOSTS = []
+CSRF_TRUSTED_ORIGINS = ['https://djangochatapp-1411.azurewebsites.net']
 
 collections.Callable = collections.abc.Callable
 
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -54,6 +56,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'django_chatapp.urls'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # # Use nose to run all tests
 # TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
@@ -133,6 +137,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
    BASE_DIR / "static",
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
