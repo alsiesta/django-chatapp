@@ -32,12 +32,12 @@ Eventuell kannst du `python -m pip install --upgrade pip` um den Package Manager
 Run `django-admin startproject chatappproject .` Der Punkt sorgt dafür, dass wir die Projekt-App nicht in zwei gleichnamigen Ordnern verschachteln, sonder auf diese Weise gleich im Root Verzeichnis bleiben und mit `python manage.py runserver` der Server einfach starten können.
 
 ## Erstelle Deine erste App im Projekt
-Run `python manage.py startapp chat` um eine App namens **chat** zu erstellen.
+Run `python manage.py startapp chat` um eine App namens **chat** zu erstellen. Und füge 'app' in settings.py bei **INSTALLED_APPS** hinzu
 
 ## Erstelle Deine Datenbank
 Run `python manage.py migrate` um Diene Sqlite DB mit Feldern zu erstellen.
 
-## Installiere einen Sqlite Viewer
+## Installiere in VSC einen Sqlite Viewer
 Unter Extensions kannst Du einen Sqlite Viewer wie z. B. Sqlite Viewer installieren, damit Du Deine DB anschauen kannst.
 
 ## Create Superuser
@@ -45,7 +45,7 @@ Run `python manage.py createsuperuser`. Erstelle Namen, E-mail and Passwort.
 Wenn Du den Server startes, kannst Du Dich nun via http://127.0.0.1:8000/admin als SuperUser in das Admin-UI einloggen.
 
 ## Synchronisiere mit einem Github Repository
-...
+Setze Dein Repo bei Git auf und bevor Du synchronisierst musst Du noch Deine **.gitignore** Datei in ROOT erstellen. 
 
 ## Lege eine .env Datei an
 Kreiere eine Datei in Root namens .env um alle Deine globalen Variablen abzuspeichern.
@@ -54,8 +54,10 @@ Kreiere eine Datei in Root namens .env um alle Deine globalen Variablen abzuspei
 Speichere mit `pip freeze > requirements.txt` alle Deine aktuellen Dependencies in die requirements.txt Datei.
 Diese Datei sorgt später immer dafür, dass mit `pip install -r requirements.txt` alle Dependencies installiert werden. 
 
+
+
 ## Lege ein Template index.html an
-In dem Ordner der Chat-App namens "chat" lege folgenden Ordner und File an:**emplates/chat/index.html**. Schreibe dort etwas HTML, was dann angezeigt werden soll z. B. `<h1>Hallo Welt.</h1>`
+In dem Ordner der Chat-App namens "chat" lege folgenden Ordner und File an:**templates/chat/index.html**. Schreibe dort etwas HTML, was dann angezeigt werden soll z. B. `<h1>Hallo Welt.</h1>`
 
 ## Konfiguriere settings.py
 In settings.py füge die 'chat' App den INSTALLED_APPS hinzu. Kreiere einen view für die index.html und eine Route in urls.py.
@@ -142,7 +144,50 @@ In der base.html müssen noch die static files geladen werden, ganz so, als wür
 ```
 
 
-## Dannn
+## Kreiere Views und Pfade:
+Zunächste die Custom Views:
+' ',
+'chat/',
+'login/', 
+'logout',
+'register',
+
+Dann nutze die Django Default Views für Password Reset:
+'password_reset/', 
+'password_reset/done/', 
+'reset/<uidb64>/<token>/', 
+'reset/done/', 
 
 
+## Erstelle ein Docker Image und Run Docker
+Build: `docker build --tag django-chatapp .`
+Run: `docker run --publish 8000:8000 django-chatapp`
 
+## For Local Development, mount your DEV Dir in Docker 
+Im CMD Terminal:
+`docker run --publish 8000:8000 -it -v "$(pwd)/source_dir:/usr/src/app" <app-name> bash`
+
+oder besser verständlich:
+
+`docker run --publish 8000:8000 -it --mount "type=bind,source=$(pwd)/source_dir,target=/app/target_dir" <app-name> bash`
+
+Wenn der Container im Terminal gestartet ist, solltest Du im Docker Prozess sein und Dein CLI sollte z. B. so aussehen:
+```
+//terminal
+root@a99226b5e552:/usr/src/app#
+```
+
+Du bist nun in Deinem Container der gerade läuft. Starte jetzt Deine App mit: `python manage.py runserver 0.0.0.0:8000`
+```
+//terminal
+root@a99226b5e552:/usr/src/app# python manage.py runserver 0.0.0.0:8000
+```
+
+Die Adresse 0.0.0.0:8000 bedeutet, dass der Server auf Anfragen an Port 8000 von allen IP-Adressen akzeptiert, die auf das Gerät zugreifen können.
+
+**Kurzum:** Der Server akzeptiert Verbindungen auf Port 8000 von allen IP-Adressen.
+
+## Weitere wichtiger Docker Befehle:
+`docker ps` zeigt alle Docker images an
+
+`docker exec -it <mycontainer> bash` öffnet das Terminal eines Docker-Containers
