@@ -141,6 +141,12 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
+# Add email backend configuration
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # For testing purposes, use console backend
+
+# Add password reset timeout
+PASSWORD_RESET_TIMEOUT = 60 * 60 * 24 * 3  # 3 days
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

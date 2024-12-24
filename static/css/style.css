@@ -48,6 +48,10 @@ body {
   display: none;
 }
 
+.mt-20 {
+  margin-top: 20px;
+}
+
 /* @media (max-width: 600px) {
   .my_navigation {
     display: none
